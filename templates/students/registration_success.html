@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}Registration complete{% endblock %}
+{% block content %}
+<div class="panel-card confirm-card"><div class="success-icon">✓</div><h1>Registration received</h1><p>Your student registration has been saved. Please contact the campus office if you need to make a change.</p><a class="btn btn-primary" href="{% url 'student-registration' %}">Register another student</a></div>
+{% endblock %}

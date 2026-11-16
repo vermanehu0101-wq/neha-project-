@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}{% if object %}Edit course{% else %}Add course{% endif %}{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">ACADEMICS</p><h1>{% if object %}Edit course{% else %}Add a course{% endif %}</h1><p class="text-secondary mb-0">Course details are shown in the student registration form.</p></div></div>
+<div class="panel-card form-card"><form method="post" novalidate>{% csrf_token %}{% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+    <div class="form-grid">{% for field in form %}<div class="form-field {% if field.name == 'description' %}wide-field{% endif %}"><label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %}<span class="required-mark"> *</span>{% endif %}</label>{{ field }}{% if field.help_text %}<div class="form-text">{{ field.help_text }}</div>{% endif %}{% for error in field.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}</div>{% endfor %}</div>
+    <div class="form-actions"><a class="btn btn-light" href="{% url 'course-list' %}">Cancel</a><button class="btn btn-primary" type="submit">Save course</button></div>
+</form></div>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Student login{% endblock %}
+{% block content %}
+<div class="auth-wrap"><div class="auth-card"><div class="auth-heading"><p class="eyebrow">STUDENT PORTAL</p><h1>Welcome back</h1><p>Sign in with the email and password you used during registration.</p></div>
+    {% if form.errors %}<div class="alert alert-danger">Your email or password was not recognized as a student account. Please try again.</div>{% endif %}
+    <form method="post">{% csrf_token %}<div class="form-field mb-3"><label class="form-label" for="{{ form.username.id_for_label }}">Email address</label>{{ form.username }}{% for error in form.username.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}</div><div class="form-field mb-3"><label class="form-label" for="{{ form.password.id_for_label }}">Password</label>{{ form.password }}{% for error in form.password.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}</div><input type="hidden" name="next" value="{{ next }}"><button class="btn btn-primary w-100" type="submit">Student log in</button></form>
+    <p class="text-secondary text-center mt-3 mb-0">New student? <a href="{% url 'student-registration' %}">Register here</a></p>
+</div></div>
+{% endblock %}

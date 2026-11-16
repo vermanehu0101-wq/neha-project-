@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}Delete course{% endblock %}
+{% block content %}
+<div class="panel-card confirm-card"><div class="confirm-icon">!</div><h1>Delete course?</h1><p>Are you sure you want to delete <strong>{{ object.course_name }}</strong>? Courses with enrolled students cannot be deleted.</p><form method="post">{% csrf_token %}<a class="btn btn-light" href="{% url 'course-list' %}">Cancel</a> <button class="btn btn-danger" type="submit">Delete course</button></form></div>
+{% endblock %}

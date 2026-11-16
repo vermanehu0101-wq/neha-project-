@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Student registration{% endblock %}
+{% block content %}
+<div class="auth-wrap"><div class="auth-card registration-card"><div class="auth-heading"><p class="eyebrow">JOIN OUR CAMPUS</p><h1>Student registration</h1><p>Complete the form and create a password for your student account.</p></div><form method="post" enctype="multipart/form-data" novalidate>{% csrf_token %}{% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+    <div class="form-grid">{% for field in form %}<div class="form-field {% if field.name == 'address' %}wide-field{% endif %}"><label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %}<span class="required-mark"> *</span>{% endif %}</label>{{ field }}{% for error in field.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}</div>{% endfor %}</div>
+    <button class="btn btn-primary w-100 mt-3" type="submit">Submit registration</button>
+</form></div></div>
+{% endblock %}

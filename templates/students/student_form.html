@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}{% if object %}Edit student{% else %}Add student{% endif %}{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">STUDENT RECORD</p><h1>{% if object %}Edit student{% else %}Add a student{% endif %}</h1><p class="text-secondary mb-0">Enter the student's details below.</p></div></div>
+<div class="panel-card form-card"><form method="post" enctype="multipart/form-data" novalidate>{% csrf_token %}
+    {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+    <div class="form-grid">{% for field in form %}<div class="form-field {% if field.name == 'address' %}wide-field{% endif %}"><label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %}<span class="required-mark"> *</span>{% endif %}</label>{{ field }}{% if field.help_text %}<div class="form-text">{{ field.help_text }}</div>{% endif %}{% for error in field.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}</div>{% endfor %}</div>
+    <div class="form-actions"><a class="btn btn-light" href="{% url 'student-list' %}">Cancel</a><button class="btn btn-primary" type="submit">Save student</button></div>
+</form></div>
+{% endblock %}

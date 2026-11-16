@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="page-heading">
+    <div><p class="eyebrow">OVERVIEW</p><h1>Good to see you, {{ user.first_name|default:user.username }}.</h1><p class="text-secondary mb-0">Here is what's happening at your campus today.</p></div>
+    <div class="dashboard-tools"><form class="dashboard-search" method="get" action="{% url 'student-list' %}"><label class="visually-hidden" for="dashboard-search">Search students</label><input id="dashboard-search" type="search" name="q" placeholder="Search students"><button type="submit" aria-label="Search">⌕</button></form><a class="btn btn-primary" href="{% url 'student-create' %}">＋ Add student</a></div>
+</div>
+<div class="row g-3 mb-4">
+    <div class="col-md-6"><div class="stat-card"><div class="stat-icon blue">♙</div><div><span>Total students</span><strong>{{ total_students }}</strong><small>Registered students</small></div></div></div>
+    <div class="col-md-6"><div class="stat-card"><div class="stat-icon violet">▤</div><div><span>Total courses</span><strong>{{ total_courses }}</strong><small>Active courses</small></div></div></div>
+</div>
+<div class="row g-3">
+    <div class="col-lg-8">
+        <div class="panel-card">
+            <div class="panel-heading"><div><h2>Recently added students</h2><p>Latest registrations in your system</p></div><a class="btn btn-sm btn-light border" href="{% url 'student-list' %}">View all</a></div>
+            <div class="table-responsive">
+                <table class="table align-middle mb-0"><thead><tr><th>Student</th><th>Student ID</th><th>Course</th><th>Registered</th></tr></thead><tbody>
+                    {% for student in recent_students %}
+                    <tr><td><a class="student-name" href="{% url 'student-detail' student.pk %}">{{ student.full_name }}</a><small class="d-block text-secondary">{{ student.email }}</small></td><td><span class="id-pill">{{ student.student_id }}</span></td><td>{{ student.course.course_name }}</td><td>{{ student.registration_date|date:"M d, Y" }}</td></tr>
+                    {% empty %}<tr><td colspan="4" class="empty-state">No students yet. Add one to get started.</td></tr>
+                    {% endfor %}
+                </tbody></table>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="panel-card quick-actions"><div class="panel-heading"><div><h2>Quick actions</h2><p>Manage your campus records</p></div></div>
+            <a href="{% url 'student-create' %}"><span class="action-icon blue">＋</span><span><strong>Add student</strong><small>Create a student record</small></span><b>→</b></a>
+            <a href="{% url 'student-list' %}"><span class="action-icon green">♙</span><span><strong>Manage students</strong><small>Search and update records</small></span><b>→</b></a>
+            <a href="{% url 'course-list' %}"><span class="action-icon violet">▤</span><span><strong>Manage courses</strong><small>View courses and enrollment</small></span><b>→</b></a>
+        </div>
+        <div class="panel-card course-summary mt-3"><div class="panel-heading"><div><h2>Courses</h2><p>Students enrolled</p></div></div>
+            {% for course in courses %}<div class="course-row"><span>{{ course.course_name }}</span><strong>{{ course.student_count }}</strong></div>{% empty %}<p class="text-secondary mb-0">No courses added.</p>{% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

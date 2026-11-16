@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}My student profile{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">STUDENT PORTAL</p><h1>Welcome, {{ student.full_name }}</h1><p class="text-secondary mb-0">Your student profile and enrollment details.</p></div><a class="btn btn-outline-secondary" href="{% url 'password_change' %}">Change password</a></div>
+<div class="panel-card profile-card">
+    {% if student.profile_image %}<img class="profile-image" src="{{ student.profile_image.url }}" alt="Profile photo of {{ student.full_name }}">{% else %}<div class="profile-placeholder">{{ student.full_name|slice:":1"|upper }}</div>{% endif %}
+    <div class="profile-details"><div><span>Full name</span><strong>{{ student.full_name }}</strong></div><div><span>Student ID</span><strong>{{ student.student_id }}</strong></div><div><span>Email</span><strong>{{ student.email }}</strong></div><div><span>Course</span><strong>{{ student.course.course_name }} ({{ student.course.course_code }})</strong></div><div><span>Phone number</span><strong>{{ student.phone_number|default:"—" }}</strong></div><div><span>Registration date</span><strong>{{ student.registration_date|date:"F d, Y" }}</strong></div><div><span>Address</span><strong>{{ student.address|default:"—"|linebreaksbr }}</strong></div></div>
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Administrator setup{% endblock %}
+{% block content %}
+<div class="auth-wrap"><div class="auth-card registration-card"><div class="auth-heading"><p class="eyebrow">FIRST-TIME SETUP</p><h1>Create administrator</h1><p>Create the first admin account. This setup page closes once an administrator exists.</p></div>
+    {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+    <form method="post" novalidate>{% csrf_token %}
+        <div class="form-grid">
+            {% for field in form %}
+            <div class="form-field">
+                <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %}<span class="required-mark"> *</span>{% endif %}</label>
+                {{ field }}
+                {% if field.help_text %}<div class="form-text">{{ field.help_text|safe }}</div>{% endif %}
+                {% for error in field.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+        <button class="btn btn-primary w-100 mt-3" type="submit">Create administrator account</button>
+    </form>
+</div></div>
+{% endblock %}
